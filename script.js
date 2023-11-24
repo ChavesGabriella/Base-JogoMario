@@ -28,20 +28,22 @@ document.addEventListener('keyup', fazerMarioPular);
 
 function atualizarPontuacao() {
     console.log('Pontuação: ' + pontuacao);
-    // Atualize a pontuação na tela
-    document.querySelector('.pontuacao').innerText = 'Pontuação: ' + pontuacao;
+    const elementoPontuacao = document.querySelector('.pontuacao');
+    if (elementoPontuacao) {
+        elementoPontuacao.innerText = 'Pontuação: ' + pontuacao;
+    }
 }
 
-function verificarColisoes(){
+function verificarColisoes() {
     const posicaoCano = cano.offsetLeft;
     const posicaoMario = parseFloat(getComputedStyle(mario).bottom);
-    const posicaoNuvem = parseFloat(getComputedStyle(nuvem).bottom);
+    const posicaoNuvem = parseFloat(getComputedStyle(nuvem).left);
 
-    if(posicaoCano <= 100 && posicaoCano > 0 && posicaoMario <60){
-        console.log("Você morreu, sua pontuação foi de: ", pontuacao);
+    if (posicaoCano <= 100 && posicaoCano > 0 && posicaoMario < 60) {
+        console.log('Você morreu, sua pontuação foi de: ', pontuacao);
         pontuacao = 0;
         pararJogo();
-    
+
         cano.style.animation = 'none';
         cano.style.left = `${posicaoCano}px`;
 
@@ -55,9 +57,9 @@ function verificarColisoes(){
         nuvem.style.left = `${posicaoNuvem}px`;
 
         fimDeJogo.style.visibility = 'visible';
-
     }
 }
+
 
 let loopJogo = setInterval(verificarColisoes, 10);
 
@@ -72,7 +74,7 @@ function reiniciarJogo() {
     mario.src = 'assets/imgs/mario.png';
     mario.style.width = '60px';
     mario.style.marginLeft = '0';
-    mario.style.bottom = '0';
+    mario.style.bottom = '80px'; 
     cano.style.animation = 'cano 2s infinite linear';
     nuvem.style.animation = 'nuvem 20s infinite linear';
     loopJogo = setInterval(verificarColisoes, 10);
